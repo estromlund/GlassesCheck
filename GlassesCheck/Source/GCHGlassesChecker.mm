@@ -13,7 +13,18 @@
 
 @implementation GCHGlassesChecker
 
-+ (void)detectGlasses {
++ (instancetype)sharedChecker
+{
+    static GCHGlassesChecker *_sharedChecker;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedChecker = [[self alloc] init];
+    });
+    
+    return _sharedChecker;
+}
+
+- (void)detectGlasses {
 	// Start Camera
 	cv::VideoCapture capture(0); // open default camera
 

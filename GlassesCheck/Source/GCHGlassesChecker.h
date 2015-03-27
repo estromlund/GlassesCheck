@@ -11,6 +11,8 @@
 
 @interface GCHGlassesChecker : NSObject
 
-+ (void)detectGlasses;
++ (instancetype)sharedChecker;
+
+- (void)detectGlasses;
 
 @end

@@ -10,16 +10,18 @@
 
 #import "GCHGlassesChecker.h"
 
+
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
+
 @end
 
 
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    [GCHGlassesChecker detectGlasses];
+	[[GCHGlassesChecker sharedChecker] detectGlasses];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
