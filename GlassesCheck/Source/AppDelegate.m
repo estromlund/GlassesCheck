@@ -8,19 +8,21 @@
 
 #import "AppDelegate.h"
 
+#import "GCHGlassesChecker.h"
+
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
 @end
 
+
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    // Insert code here to initialize your application
+    [GCHGlassesChecker detectGlasses];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
-    // Insert code here to tear down your application
 }
 
 @end
