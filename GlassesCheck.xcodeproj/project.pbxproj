@@ -76,10 +76,8 @@
 		032D4C861AC564930084B658 /* GlassesCheck */ = {
 			isa = PBXGroup;
 			children = (
-				032D4C891AC564930084B658 /* AppDelegate.h */,
-				032D4C8A1AC564930084B658 /* AppDelegate.m */,
-				032D4C8E1AC564930084B658 /* Images.xcassets */,
-				032D4C901AC564940084B658 /* MainMenu.xib */,
+				032D4CA81AC564B20084B658 /* Source */,
+				032D4CA71AC564AB0084B658 /* Resources */,
 				032D4C871AC564930084B658 /* Supporting Files */,
 			);
 			path = GlassesCheck;
@@ -109,6 +107,24 @@
 				032D4C9C1AC564940084B658 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		032D4CA71AC564AB0084B658 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				032D4C8E1AC564930084B658 /* Images.xcassets */,
+				032D4C901AC564940084B658 /* MainMenu.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		032D4CA81AC564B20084B658 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				032D4C891AC564930084B658 /* AppDelegate.h */,
+				032D4C8A1AC564930084B658 /* AppDelegate.m */,
+			);
+			name = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
