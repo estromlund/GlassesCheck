@@ -38,7 +38,7 @@
 
 - (void)detectGlasses {
 	// Start Camera
-	cv::VideoCapture capture(0); // open default camera
+	cv::VideoCapture capture(0);     // open default camera
 
 	if (capture.isOpened() == false) {
 		return;
@@ -51,46 +51,49 @@
 	cv::Mat videoFrame;
 	cv::vector <cv::Rect> detectorResults;
 
-
 	// Process each frame
 	while (true) {
 		// Store off capture into frame
 		capture >> videoFrame;
 
+#if DEBUG_IMAGE_PROCESSING
+		cv::flip(videoFrame, videoFrame, 1);
 		cv::imshow("Original", videoFrame);
+#endif
 
-		[self preprocessFrame:videoFrame];
+		videoFrame = [self preprocessFrame:videoFrame];
 
-		cv::vector <cv::Rect> detectorResults = [self featuresInFrame:videoFrame usingClassifier:eyePairDetector];
+#if DEBUG_IMAGE_PROCESSING
+		cv::imshow("Preprocessed", videoFrame);
+#endif
+
+		detectorResults = [self featuresInFrame:videoFrame usingClassifier:eyePairDetector];
 
 		if (![self exactlyOneFeatureDetected:detectorResults]) {
+#if DEBUG_IMAGE_PROCESSING
+			NSLog(@"Skipping frame - <>1 eye pair detected.");
+#endif
 			continue;
 		}
 
 		cv::Rect eyeRect = detectorResults[0];
 
 		cv::Mat areaBetweenEyesFrame = [self betweenEyesROIFromEyePairRect:eyeRect inFrame:videoFrame];
-		cv::Mat blurredFrame = [self blurredFrameFromFrame:areaBetweenEyesFrame];
-		cv::Mat edgesFrame = [self edgesFrameFromFrame:blurredFrame];
+		cv::Mat edgesFrame = [self edgesFrameFromFrame:areaBetweenEyesFrame];
 
+#if DEBUG_IMAGE_PROCESSING
 		cv::imshow("Preprocessed", videoFrame);
 		cv::imshow("Between Eyes", areaBetweenEyesFrame);
-		cv::imshow("Blurred", blurredFrame);
 		cv::imshow("Edges", edgesFrame);
+#endif
 
 		long numContours = [self numberOfContoursInFrame:edgesFrame];
 
 		if (numContours == 0) {
-			NSLog(@"No glasses! (contour count %lu)", numContours);
+//			NSLog(@"No glasses! (contour count %lu)", numContours);
 		}
-		else if (numContours > 1) {
-			NSLog(@"Glasses! (contour count %lu)", numContours);
-		}
-
-		// Cancel if ESC is pressed
-		int key = cv::waitKey(1);
-		if (key == 27) {
-			break;
+		else {
+//			NSLog(@"Glasses! (contour count %lu)", numContours);
 		}
 	}
 }
@@ -99,9 +102,10 @@
 	return (results.size() == 1);
 }
 
-- (void)preprocessFrame:(cv::Mat)originalFrame {
+- (cv::Mat)preprocessFrame:(cv::Mat)originalFrame {
 	cv::cvtColor(originalFrame, originalFrame, CV_BGR2GRAY);
-	cv::equalizeHist(originalFrame, originalFrame);
+//    cv::equalizeHist(originalFrame, originalFrame);
+	return originalFrame;
 }
 
 - (cv::vector <cv::Rect> )featuresInFrame:(cv::Mat)frame usingClassifier:(cv::CascadeClassifier)classifier {
@@ -119,29 +123,21 @@
 }
 
 - (cv::Mat)betweenEyesROIFromEyePairRect:(cv::Rect)eyePairRect inFrame:(cv::Mat)containingFrame {
-	cv::Mat eyeBoxFrame = containingFrame(eyePairRect);
-
 	// Crop to area between eyes
 	int width = 20;
-	int height = eyePairRect.height;
+	int additionalHeight = 10;
+	int height = eyePairRect.height + additionalHeight;
 
-	int middleX = eyePairRect.width / 2;
+	int middleX = eyePairRect.x + eyePairRect.width / 2;
 	int x1 = middleX - width / 2;
-	int y1 = 0;
+	int y1 = eyePairRect.y - additionalHeight;
 
 	cv::Rect betweenEyesRect = cv::Rect(x1,
 	                                    y1,
 	                                    width,
 	                                    height);
 
-	return eyeBoxFrame(betweenEyesRect);
-}
-
-- (cv::Mat)blurredFrameFromFrame:(cv::Mat)frame {
-	cv::Mat blurFrame;
-	cv::blur(frame, blurFrame, cv::Size(6, 6));
-
-	return blurFrame;
+	return containingFrame(betweenEyesRect);
 }
 
 - (cv::Mat)edgesFrameFromFrame:(cv::Mat)frame {
