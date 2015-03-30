@@ -28,9 +28,23 @@
 }
 
 - (void)_addStatusBarItem {
-	self.statusBarItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
-	self.statusBarItem.image = [NSImage imageNamed:@"glasses_on"];
-	self.statusBarItem.image.template = YES;
+	NSStatusItem *statusBarItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+	statusBarItem.image = [NSImage imageNamed:@"glasses_on"];
+	statusBarItem.image.template = YES;
+
+	NSMenu *statusBarMenu = [NSMenu new];
+	NSString *quitItemTitle = NSLocalizedString(@"Quit", nil);
+	[statusBarMenu addItemWithTitle:quitItemTitle action:@selector(quitApp:) keyEquivalent:@""];
+
+	statusBarItem.menu = statusBarMenu;
+
+	self.statusBarItem = statusBarItem;
+}
+
+#pragma mark - Actions
+
+- (void)quitApp:(id)sender {
+	[NSApp terminate:nil];
 }
 
 @end
