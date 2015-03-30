@@ -8,11 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+@class RACSignal;
+
+
+typedef NS_ENUM (NSInteger, GCHGlassesPresence) {
+    GCHGlassesPresenceUnknown,
+    GCHGlassesPresenceFalse,
+    GCHGlassesPresenceTrue,
+};
+
 
 @interface GCHGlassesChecker : NSObject
 
 + (instancetype)sharedChecker;
 
-- (void)detectGlasses;
+- (RACSignal *)glassesPresenceSignal;
 
 @end

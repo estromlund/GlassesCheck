@@ -10,4 +10,6 @@
 
 @interface RACStream (GCHAdditions)
 
+- (instancetype)filterUntilValueOccursNumTimesInARow:(NSInteger)numTimes;
+
 @end
