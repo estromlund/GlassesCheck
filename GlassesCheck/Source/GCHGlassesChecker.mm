@@ -23,20 +23,12 @@
 	return _sharedChecker;
 }
 
-- (cv::CascadeClassifier)eyePairDetector {
-	NSString *eyePairCascadePath = [[NSBundle mainBundle] pathForResource:@"haarcascade_mcs_eyepair_small"
-	                                                               ofType:@"xml"];
-	const CFIndex CASCADE_NAME_LEN = 2048;
-	char *CASCADE_NAME = (char *)malloc(CASCADE_NAME_LEN);
-	CFStringGetFileSystemRepresentation((CFStringRef)eyePairCascadePath, CASCADE_NAME, CASCADE_NAME_LEN);
-
-	cv::CascadeClassifier eyePairDetector;
-	eyePairDetector.load(CASCADE_NAME);
-
-	return eyePairDetector;
-}
-
 - (void)detectGlasses {
+    if ([NSThread isMainThread]) {
+        [self performSelectorInBackground:@selector(detectGlasses) withObject:nil];
+        return;
+    }
+    
 	// Start Camera
 	cv::VideoCapture capture(0);     // open default camera
 
@@ -96,6 +88,19 @@
 //			NSLog(@"Glasses! (contour count %lu)", numContours);
 		}
 	}
+}
+
+- (cv::CascadeClassifier)eyePairDetector {
+	NSString *eyePairCascadePath = [[NSBundle mainBundle] pathForResource:@"haarcascade_mcs_eyepair_small"
+	                                                               ofType:@"xml"];
+	const CFIndex CASCADE_NAME_LEN = 2048;
+	char *CASCADE_NAME = (char *)malloc(CASCADE_NAME_LEN);
+	CFStringGetFileSystemRepresentation((CFStringRef)eyePairCascadePath, CASCADE_NAME, CASCADE_NAME_LEN);
+
+	cv::CascadeClassifier eyePairDetector;
+	eyePairDetector.load(CASCADE_NAME);
+
+	return eyePairDetector;
 }
 
 - (BOOL)exactlyOneFeatureDetected:(cv::vector <cv::Rect> )results {
