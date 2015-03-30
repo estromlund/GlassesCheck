@@ -16,6 +16,7 @@
 		032D4CB41AC5688B0084B658 /* GCHGlassesChecker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 032D4CB31AC5688B0084B658 /* GCHGlassesChecker.mm */; };
 		032D4CCF1AC56E3A0084B658 /* libopencv_objdetect.2.4.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 032D4CC21AC56E3A0084B658 /* libopencv_objdetect.2.4.10.dylib */; };
 		032D4CD71AC57ACD0084B658 /* libopencv_imgproc.2.4.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 032D4CD61AC57ACD0084B658 /* libopencv_imgproc.2.4.10.dylib */; };
+		0373446B1AC99810009466D8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0373446A1AC99810009466D8 /* MainMenu.xib */; };
 		03F8F6491AC9873D0064799B /* haarcascade_mcs_eyepair_small.xml in Resources */ = {isa = PBXBuildFile; fileRef = 03F8F6481AC9873D0064799B /* haarcascade_mcs_eyepair_small.xml */; };
 		F336D7EA613FE121E13E4944 /* libPods-GlassesCheck.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B3C9F8013E1BCAFA254EAE2 /* libPods-GlassesCheck.a */; };
 /* End PBXBuildFile section */
@@ -46,6 +47,7 @@
 		032D4CB31AC5688B0084B658 /* GCHGlassesChecker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GCHGlassesChecker.mm; sourceTree = "<group>"; };
 		032D4CC21AC56E3A0084B658 /* libopencv_objdetect.2.4.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_objdetect.2.4.10.dylib; path = ../../../../../usr/local/Cellar/opencv/2.4.10.1/lib/libopencv_objdetect.2.4.10.dylib; sourceTree = "<group>"; };
 		032D4CD61AC57ACD0084B658 /* libopencv_imgproc.2.4.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_imgproc.2.4.10.dylib; path = ../../../../../usr/local/Cellar/opencv/2.4.10.1/lib/libopencv_imgproc.2.4.10.dylib; sourceTree = "<group>"; };
+		0373446A1AC99810009466D8 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		03F8F6481AC9873D0064799B /* haarcascade_mcs_eyepair_small.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_mcs_eyepair_small.xml; sourceTree = "<group>"; };
 		4B3C9F8013E1BCAFA254EAE2 /* libPods-GlassesCheck.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GlassesCheck.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5142F7621BF5C8794B50FEE1 /* Pods-GlassesCheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlassesCheck.release.xcconfig"; path = "Pods/Target Support Files/Pods-GlassesCheck/Pods-GlassesCheck.release.xcconfig"; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 			children = (
 				03F8F6481AC9873D0064799B /* haarcascade_mcs_eyepair_small.xml */,
 				032D4C8E1AC564930084B658 /* Images.xcassets */,
+				0373446A1AC99810009466D8 /* MainMenu.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -144,10 +147,9 @@
 		032D4CA81AC564B20084B658 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				032D4CB21AC5688B0084B658 /* GCHGlassesChecker.h */,
-				032D4CB31AC5688B0084B658 /* GCHGlassesChecker.mm */,
-				032D4C891AC564930084B658 /* AppDelegate.h */,
-				032D4C8A1AC564930084B658 /* AppDelegate.m */,
+				03C150071AC9A76100A1B85C /* App */,
+				03C150051AC9A74800A1B85C /* Categories */,
+				03C150061AC9A75400A1B85C /* Image Processing */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -169,6 +171,33 @@
 				032D4CAC1AC565D50084B658 /* libopencv_highgui.2.4.10.dylib */,
 			);
 			name = OpenCV;
+			sourceTree = "<group>";
+		};
+		03C150051AC9A74800A1B85C /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				03C150081AC9A78600A1B85C /* RACStream+GCHAdditions.h */,
+				03C150091AC9A78600A1B85C /* RACStream+GCHAdditions.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		03C150061AC9A75400A1B85C /* Image Processing */ = {
+			isa = PBXGroup;
+			children = (
+				032D4CB21AC5688B0084B658 /* GCHGlassesChecker.h */,
+				032D4CB31AC5688B0084B658 /* GCHGlassesChecker.mm */,
+			);
+			name = "Image Processing";
+			sourceTree = "<group>";
+		};
+		03C150071AC9A76100A1B85C /* App */ = {
+			isa = PBXGroup;
+			children = (
+				032D4C891AC564930084B658 /* AppDelegate.h */,
+				032D4C8A1AC564930084B658 /* AppDelegate.m */,
+			);
+			name = App;
 			sourceTree = "<group>";
 		};
 		1F58CC1831F9321C49342C31 /* Frameworks */ = {
@@ -272,6 +301,7 @@
 			files = (
 				032D4C8F1AC564930084B658 /* Images.xcassets in Resources */,
 				03F8F6491AC9873D0064799B /* haarcascade_mcs_eyepair_small.xml in Resources */,
+				0373446B1AC99810009466D8 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
