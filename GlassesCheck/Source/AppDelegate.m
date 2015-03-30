@@ -14,6 +14,7 @@
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
+@property (strong) NSStatusItem *statusBarItem;
 
 @end
 
@@ -21,10 +22,15 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	[self _addStatusBarItem];
+
 	[[GCHGlassesChecker sharedChecker] detectGlasses];
 }
 
-- (void)applicationWillTerminate:(NSNotification *)aNotification {
+- (void)_addStatusBarItem {
+	self.statusBarItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+	self.statusBarItem.image = [NSImage imageNamed:@"glasses_on"];
+	self.statusBarItem.image.template = YES;
 }
 
 @end

@@ -10,16 +10,13 @@
 		032D4C8B1AC564930084B658 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 032D4C8A1AC564930084B658 /* AppDelegate.m */; };
 		032D4C8D1AC564930084B658 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 032D4C8C1AC564930084B658 /* main.m */; };
 		032D4C8F1AC564930084B658 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 032D4C8E1AC564930084B658 /* Images.xcassets */; };
-		032D4C921AC564940084B658 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 032D4C901AC564940084B658 /* MainMenu.xib */; };
 		032D4C9E1AC564940084B658 /* GlassesCheckTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 032D4C9D1AC564940084B658 /* GlassesCheckTests.m */; };
 		032D4CAD1AC565D50084B658 /* libopencv_core.2.4.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 032D4CAB1AC565D50084B658 /* libopencv_core.2.4.10.dylib */; };
 		032D4CAE1AC565D50084B658 /* libopencv_highgui.2.4.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 032D4CAC1AC565D50084B658 /* libopencv_highgui.2.4.10.dylib */; };
 		032D4CB41AC5688B0084B658 /* GCHGlassesChecker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 032D4CB31AC5688B0084B658 /* GCHGlassesChecker.mm */; };
-		032D4CB71AC569120084B658 /* DebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032D4CB61AC569120084B658 /* DebugViewController.m */; };
 		032D4CCF1AC56E3A0084B658 /* libopencv_objdetect.2.4.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 032D4CC21AC56E3A0084B658 /* libopencv_objdetect.2.4.10.dylib */; };
 		032D4CD71AC57ACD0084B658 /* libopencv_imgproc.2.4.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 032D4CD61AC57ACD0084B658 /* libopencv_imgproc.2.4.10.dylib */; };
-		035EFEE21AC5AE1E007F6098 /* haarcascade_mcs_eyepair_big.xml in Resources */ = {isa = PBXBuildFile; fileRef = 035EFEDA1AC5AE1E007F6098 /* haarcascade_mcs_eyepair_big.xml */; };
-		035EFEE31AC5AE1E007F6098 /* haarcascade_mcs_eyepair_small.xml in Resources */ = {isa = PBXBuildFile; fileRef = 035EFEDB1AC5AE1E007F6098 /* haarcascade_mcs_eyepair_small.xml */; };
+		03F8F6491AC9873D0064799B /* haarcascade_mcs_eyepair_small.xml in Resources */ = {isa = PBXBuildFile; fileRef = 03F8F6481AC9873D0064799B /* haarcascade_mcs_eyepair_small.xml */; };
 		F336D7EA613FE121E13E4944 /* libPods-GlassesCheck.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B3C9F8013E1BCAFA254EAE2 /* libPods-GlassesCheck.a */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +37,6 @@
 		032D4C8A1AC564930084B658 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		032D4C8C1AC564930084B658 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		032D4C8E1AC564930084B658 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		032D4C911AC564940084B658 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		032D4C971AC564940084B658 /* GlassesCheckTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GlassesCheckTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		032D4C9C1AC564940084B658 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		032D4C9D1AC564940084B658 /* GlassesCheckTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlassesCheckTests.m; sourceTree = "<group>"; };
@@ -48,12 +44,9 @@
 		032D4CAC1AC565D50084B658 /* libopencv_highgui.2.4.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_highgui.2.4.10.dylib; path = ../../../../../usr/local/Cellar/opencv/2.4.10.1/lib/libopencv_highgui.2.4.10.dylib; sourceTree = "<group>"; };
 		032D4CB21AC5688B0084B658 /* GCHGlassesChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCHGlassesChecker.h; sourceTree = "<group>"; };
 		032D4CB31AC5688B0084B658 /* GCHGlassesChecker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GCHGlassesChecker.mm; sourceTree = "<group>"; };
-		032D4CB51AC569120084B658 /* DebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugViewController.h; sourceTree = "<group>"; };
-		032D4CB61AC569120084B658 /* DebugViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugViewController.m; sourceTree = "<group>"; };
 		032D4CC21AC56E3A0084B658 /* libopencv_objdetect.2.4.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_objdetect.2.4.10.dylib; path = ../../../../../usr/local/Cellar/opencv/2.4.10.1/lib/libopencv_objdetect.2.4.10.dylib; sourceTree = "<group>"; };
 		032D4CD61AC57ACD0084B658 /* libopencv_imgproc.2.4.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_imgproc.2.4.10.dylib; path = ../../../../../usr/local/Cellar/opencv/2.4.10.1/lib/libopencv_imgproc.2.4.10.dylib; sourceTree = "<group>"; };
-		035EFEDA1AC5AE1E007F6098 /* haarcascade_mcs_eyepair_big.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_mcs_eyepair_big.xml; sourceTree = "<group>"; };
-		035EFEDB1AC5AE1E007F6098 /* haarcascade_mcs_eyepair_small.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_mcs_eyepair_small.xml; sourceTree = "<group>"; };
+		03F8F6481AC9873D0064799B /* haarcascade_mcs_eyepair_small.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_mcs_eyepair_small.xml; sourceTree = "<group>"; };
 		4B3C9F8013E1BCAFA254EAE2 /* libPods-GlassesCheck.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GlassesCheck.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5142F7621BF5C8794B50FEE1 /* Pods-GlassesCheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlassesCheck.release.xcconfig"; path = "Pods/Target Support Files/Pods-GlassesCheck/Pods-GlassesCheck.release.xcconfig"; sourceTree = "<group>"; };
 		F761E7AB515203BBE4AD6830 /* Pods-GlassesCheck.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlassesCheck.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GlassesCheck/Pods-GlassesCheck.debug.xcconfig"; sourceTree = "<group>"; };
@@ -142,10 +135,8 @@
 		032D4CA71AC564AB0084B658 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				035EFEDA1AC5AE1E007F6098 /* haarcascade_mcs_eyepair_big.xml */,
-				035EFEDB1AC5AE1E007F6098 /* haarcascade_mcs_eyepair_small.xml */,
+				03F8F6481AC9873D0064799B /* haarcascade_mcs_eyepair_small.xml */,
 				032D4C8E1AC564930084B658 /* Images.xcassets */,
-				032D4C901AC564940084B658 /* MainMenu.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -157,8 +148,6 @@
 				032D4CB31AC5688B0084B658 /* GCHGlassesChecker.mm */,
 				032D4C891AC564930084B658 /* AppDelegate.h */,
 				032D4C8A1AC564930084B658 /* AppDelegate.m */,
-				032D4CB51AC569120084B658 /* DebugViewController.h */,
-				032D4CB61AC569120084B658 /* DebugViewController.m */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -281,10 +270,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				035EFEE31AC5AE1E007F6098 /* haarcascade_mcs_eyepair_small.xml in Resources */,
 				032D4C8F1AC564930084B658 /* Images.xcassets in Resources */,
-				032D4C921AC564940084B658 /* MainMenu.xib in Resources */,
-				035EFEE21AC5AE1E007F6098 /* haarcascade_mcs_eyepair_big.xml in Resources */,
+				03F8F6491AC9873D0064799B /* haarcascade_mcs_eyepair_small.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,7 +324,6 @@
 			files = (
 				032D4CB41AC5688B0084B658 /* GCHGlassesChecker.mm in Sources */,
 				032D4C8D1AC564930084B658 /* main.m in Sources */,
-				032D4CB71AC569120084B658 /* DebugViewController.m in Sources */,
 				032D4C8B1AC564930084B658 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -359,17 +345,6 @@
 			targetProxy = 032D4C981AC564940084B658 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		032D4C901AC564940084B658 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				032D4C911AC564940084B658 /* Base */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		032D4C9F1AC564940084B658 /* Debug */ = {
