@@ -18,6 +18,8 @@
 		032D4CD71AC57ACD0084B658 /* libopencv_imgproc.2.4.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 032D4CD61AC57ACD0084B658 /* libopencv_imgproc.2.4.10.dylib */; };
 		0373446B1AC99810009466D8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0373446A1AC99810009466D8 /* MainMenu.xib */; };
 		03C1500A1AC9A78600A1B85C /* RACStream+GCHAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 03C150091AC9A78600A1B85C /* RACStream+GCHAdditions.m */; };
+		03C1500E1AC9B28B00A1B85C /* GCHStatusBarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03C1500D1AC9B28B00A1B85C /* GCHStatusBarManager.m */; };
+		03C150131AC9D5C400A1B85C /* GCHCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03C150121AC9D5C400A1B85C /* GCHCamera.mm */; };
 		03F8F6491AC9873D0064799B /* haarcascade_mcs_eyepair_small.xml in Resources */ = {isa = PBXBuildFile; fileRef = 03F8F6481AC9873D0064799B /* haarcascade_mcs_eyepair_small.xml */; };
 		F336D7EA613FE121E13E4944 /* libPods-GlassesCheck.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B3C9F8013E1BCAFA254EAE2 /* libPods-GlassesCheck.a */; };
 /* End PBXBuildFile section */
@@ -51,6 +53,11 @@
 		0373446A1AC99810009466D8 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		03C150081AC9A78600A1B85C /* RACStream+GCHAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RACStream+GCHAdditions.h"; sourceTree = "<group>"; };
 		03C150091AC9A78600A1B85C /* RACStream+GCHAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RACStream+GCHAdditions.m"; sourceTree = "<group>"; };
+		03C1500C1AC9B28B00A1B85C /* GCHStatusBarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCHStatusBarManager.h; sourceTree = "<group>"; };
+		03C1500D1AC9B28B00A1B85C /* GCHStatusBarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCHStatusBarManager.m; sourceTree = "<group>"; };
+		03C1500F1AC9B38300A1B85C /* GCHGlassesPresence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCHGlassesPresence.h; sourceTree = "<group>"; };
+		03C150111AC9D5C400A1B85C /* GCHCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCHCamera.h; sourceTree = "<group>"; };
+		03C150121AC9D5C400A1B85C /* GCHCamera.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GCHCamera.mm; sourceTree = "<group>"; };
 		03F8F6481AC9873D0064799B /* haarcascade_mcs_eyepair_small.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haarcascade_mcs_eyepair_small.xml; sourceTree = "<group>"; };
 		4B3C9F8013E1BCAFA254EAE2 /* libPods-GlassesCheck.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GlassesCheck.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5142F7621BF5C8794B50FEE1 /* Pods-GlassesCheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GlassesCheck.release.xcconfig"; path = "Pods/Target Support Files/Pods-GlassesCheck/Pods-GlassesCheck.release.xcconfig"; sourceTree = "<group>"; };
@@ -152,7 +159,6 @@
 			children = (
 				03C150071AC9A76100A1B85C /* App */,
 				03C150051AC9A74800A1B85C /* Categories */,
-				03C150061AC9A75400A1B85C /* Image Processing */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -185,20 +191,18 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
-		03C150061AC9A75400A1B85C /* Image Processing */ = {
-			isa = PBXGroup;
-			children = (
-				032D4CB21AC5688B0084B658 /* GCHGlassesChecker.h */,
-				032D4CB31AC5688B0084B658 /* GCHGlassesChecker.mm */,
-			);
-			name = "Image Processing";
-			sourceTree = "<group>";
-		};
 		03C150071AC9A76100A1B85C /* App */ = {
 			isa = PBXGroup;
 			children = (
 				032D4C891AC564930084B658 /* AppDelegate.h */,
 				032D4C8A1AC564930084B658 /* AppDelegate.m */,
+				032D4CB21AC5688B0084B658 /* GCHGlassesChecker.h */,
+				032D4CB31AC5688B0084B658 /* GCHGlassesChecker.mm */,
+				03C1500F1AC9B38300A1B85C /* GCHGlassesPresence.h */,
+				03C1500C1AC9B28B00A1B85C /* GCHStatusBarManager.h */,
+				03C1500D1AC9B28B00A1B85C /* GCHStatusBarManager.m */,
+				03C150111AC9D5C400A1B85C /* GCHCamera.h */,
+				03C150121AC9D5C400A1B85C /* GCHCamera.mm */,
 			);
 			name = App;
 			sourceTree = "<group>";
@@ -356,6 +360,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				032D4CB41AC5688B0084B658 /* GCHGlassesChecker.mm in Sources */,
+				03C150131AC9D5C400A1B85C /* GCHCamera.mm in Sources */,
+				03C1500E1AC9B28B00A1B85C /* GCHStatusBarManager.m in Sources */,
 				03C1500A1AC9A78600A1B85C /* RACStream+GCHAdditions.m in Sources */,
 				032D4C8D1AC564930084B658 /* main.m in Sources */,
 				032D4C8B1AC564930084B658 /* AppDelegate.m in Sources */,

@@ -11,17 +11,10 @@
 @class RACSignal;
 
 
-typedef NS_ENUM (NSInteger, GCHGlassesPresence) {
-    GCHGlassesPresenceUnknown,
-    GCHGlassesPresenceFalse,
-    GCHGlassesPresenceTrue,
-};
-
-
 @interface GCHGlassesChecker : NSObject
 
-+ (instancetype)sharedChecker;
-
+// Turns on camera for first subscriber, and turns it off
+// when no more subscribers are left
 - (RACSignal *)glassesPresenceSignal;
 
 @end

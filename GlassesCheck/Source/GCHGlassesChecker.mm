@@ -8,93 +8,122 @@
 
 #import "GCHGlassesChecker.h"
 
+#import "GCHCamera.h"
+#import "GCHGlassesPresence.h"
+
+#import "RACStream+GCHAdditions.h"
+
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <opencv2/opencv.hpp>
 
 
+@interface GCHGlassesChecker ()<GCHCameraOutput>
+
+@property (strong) RACReplaySubject *presenceSubject;
+@property (assign) NSInteger numberOfSubscribers;
+
+@property (strong) GCHCamera *camera;
+
+@end
+
+
 @implementation GCHGlassesChecker
 
-+ (instancetype)sharedChecker
+- (instancetype)init
 {
-    static GCHGlassesChecker *_sharedChecker;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _sharedChecker = [[self alloc] init];
-    });
+    self = [super init];
+    if (self) {
+        self.presenceSubject = [RACReplaySubject replaySubjectWithCapacity:10];
+    }
 
-    return _sharedChecker;
+    return self;
 }
 
 - (RACSignal *)glassesPresenceSignal
 {
-    @weakify(self);
-
-    return [RACSignal startLazilyWithScheduler :[RACScheduler schedulerWithPriority:RACSchedulerPriorityBackground
-                                                                               name:@"com.fathomworks.glassescheck.image-processing"]
-            block :^(id<RACSubscriber> subscriber) {
-        @strongify(self);
-
-        cv::VideoCapture capture(0); // open default camera
-
-        if (capture.isOpened() == false) {
-            [subscriber sendError:nil];
-        }
-
-        // Setup Detector
-        cv::CascadeClassifier eyePairDetector = [self eyePairDetector];
-
-        // General Frame Processing Setup
-        cv::Mat videoFrame;
-        cv::vector<cv::Rect> detectorResults;
-
-#define DEBUG_IMAGE_PROCESSING 1
-
-        // Process each frame
-        while (true) {
-            // Store off capture into frame
-            capture >> videoFrame;
-
-#if DEBUG_IMAGE_PROCESSING
-            cv::flip(videoFrame, videoFrame, 1);
-            cv::imshow("Original", videoFrame);
-#endif
-
-            videoFrame = [self preprocessFrame:videoFrame];
-
-#if DEBUG_IMAGE_PROCESSING
-            cv::imshow("Preprocessed", videoFrame);
-#endif
-
-            detectorResults = [self featuresInFrame:videoFrame usingClassifier:eyePairDetector];
-
-            if (![self exactlyOneFeatureDetected:detectorResults]) {
-#if DEBUG_IMAGE_PROCESSING
-                NSLog(@"Skipping frame - <>1 eye pair detected.");
-#endif
-                [subscriber sendNext:@(GCHGlassesPresenceUnknown)];
-                continue;
+    return [[[RACSignal createSignal:^RACDisposable *(id < RACSubscriber > subscriber) {
+        @synchronized(self)
+        {
+            if (self.numberOfSubscribers == 0) {
+                [self _startCapturingVideo];
             }
 
-            cv::Rect eyeRect = detectorResults[0];
+            ++self.numberOfSubscribers;
+        }
 
-            cv::Mat areaBetweenEyesFrame = [self betweenEyesROIFromEyePairRect:eyeRect inFrame:videoFrame];
-            cv::Mat edgesFrame = [self edgesFrameFromFrame:areaBetweenEyesFrame];
+        [self.presenceSubject subscribe:subscriber];
+
+        return [RACDisposable disposableWithBlock:^{
+            @synchronized(self)
+            {
+                --self.numberOfSubscribers;
+
+                if (self.numberOfSubscribers == 0) {
+                    [self _stopCapturingVideo];
+                }
+            }
+        }];
+    }] logAll] filterUntilValueOccursNumTimesInARow:15];
+}
+
+- (void)_startCapturingVideo
+{
+    self.camera = [GCHCamera new];
+    self.camera.output = self;
+    [self.camera startStream];
+}
+
+- (void)_stopCapturingVideo
+{
+    [self.camera endStream];
+}
+
+- (void)fetchedFrameFromCamera:(cv::Mat)videoFrame
+{
+    static cv::CascadeClassifier eyePairDetector = [self eyePairDetector];
+
+    cv::vector<cv::Rect> detectorResults;
 
 #if DEBUG_IMAGE_PROCESSING
-            cv::imshow("Preprocessed", videoFrame);
-            cv::imshow("Between Eyes", areaBetweenEyesFrame);
-            cv::imshow("Edges", edgesFrame);
+    cv::flip(videoFrame, videoFrame, 1);
+    cv::imshow("Original", videoFrame);
 #endif
 
-            long numContours = [self numberOfContoursInFrame:edgesFrame];
+    videoFrame = [self preprocessFrame:videoFrame];
 
-            if (numContours == 0) {
-                [subscriber sendNext:@(GCHGlassesPresenceFalse)];
-            } else {
-                [subscriber sendNext:@(GCHGlassesPresenceTrue)];
-            }
-        }
-    }];
+#if DEBUG_IMAGE_PROCESSING
+    cv::imshow("Preprocessed", videoFrame);
+#endif
+
+    detectorResults = [self featuresInFrame:videoFrame usingClassifier:eyePairDetector];
+
+    if (![self exactlyOneFeatureDetected:detectorResults]) {
+#if DEBUG_IMAGE_PROCESSING
+        NSLog(@"Skipping frame - <>1 eye pair detected.");
+#endif
+        [self.presenceSubject sendNext:@(GCHGlassesPresenceUnknown)];
+
+        return;
+    }
+
+    cv::Rect eyeRect = detectorResults[0];
+
+    cv::Mat areaBetweenEyesFrame = [self betweenEyesROIFromEyePairRect:eyeRect inFrame:videoFrame];
+    cv::Mat edgesFrame = [self edgesFrameFromFrame:areaBetweenEyesFrame];
+
+#if DEBUG_IMAGE_PROCESSING
+    cv::imshow("Preprocessed", videoFrame);
+    cv::imshow("Between Eyes", areaBetweenEyesFrame);
+    cv::imshow("Edges", edgesFrame);
+#endif
+
+    long numContours = [self numberOfContoursInFrame:edgesFrame];
+
+    if (numContours == 0) {
+        [self.presenceSubject sendNext:@(GCHGlassesPresenceFalse)];
+    } else {
+        [self.presenceSubject sendNext:@(GCHGlassesPresenceTrue)];
+    }
 }
 
 - (cv::CascadeClassifier)eyePairDetector
