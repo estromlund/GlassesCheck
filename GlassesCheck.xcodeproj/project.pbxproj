@@ -52,6 +52,7 @@
 		032D4CD61AC57ACD0084B658 /* libopencv_imgproc.2.4.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_imgproc.2.4.10.dylib; path = ../../../../../usr/local/Cellar/opencv/2.4.10.1/lib/libopencv_imgproc.2.4.10.dylib; sourceTree = "<group>"; };
 		0351A5821ACC01D000CB5B75 /* GCHTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCHTypes.h; sourceTree = "<group>"; };
 		0373446A1AC99810009466D8 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		03C03A6B1ACC36370000E4AC /* GlassesCheck.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = GlassesCheck.entitlements; sourceTree = "<group>"; };
 		03C150081AC9A78600A1B85C /* RACStream+GCHAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RACStream+GCHAdditions.h"; sourceTree = "<group>"; };
 		03C150091AC9A78600A1B85C /* RACStream+GCHAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RACStream+GCHAdditions.m"; sourceTree = "<group>"; };
 		03C1500C1AC9B28B00A1B85C /* GCHStatusItemController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCHStatusItemController.h; sourceTree = "<group>"; };
@@ -111,6 +112,7 @@
 		032D4C861AC564930084B658 /* GlassesCheck */ = {
 			isa = PBXGroup;
 			children = (
+				03C03A6B1ACC36370000E4AC /* GlassesCheck.entitlements */,
 				032D4CA81AC564B20084B658 /* Source */,
 				032D4CA71AC564AB0084B658 /* Resources */,
 				032D4CA91AC565510084B658 /* Externals */,
@@ -277,6 +279,12 @@
 				TargetAttributes = {
 					032D4C831AC564930084B658 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 6A2X98JPB2;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
 					};
 					032D4C961AC564940084B658 = {
 						CreatedOnToolsVersion = 6.2;
@@ -470,6 +478,7 @@
 			baseConfigurationReference = F761E7AB515203BBE4AD6830 /* Pods-GlassesCheck.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GlassesCheck/GlassesCheck.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -491,6 +500,7 @@
 			baseConfigurationReference = 5142F7621BF5C8794B50FEE1 /* Pods-GlassesCheck.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GlassesCheck/GlassesCheck.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
