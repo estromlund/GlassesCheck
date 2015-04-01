@@ -35,7 +35,7 @@
 
     self.statusItemController = [[GCHStatusItemController alloc] init];
     [self.statusItemController installAppStatusItem];
-    
+
     [self.statusItemController.detectNowCommand.executionSignals subscribeNext:^(id x) {
         [self detectGlassesNow];
     }];
@@ -47,6 +47,48 @@
 
     [self detectGlassesNow];
 }
+
+#pragma mark - Detection Methods
+
+- (void)detectGlassesOnTimedInterval
+{
+    [self setupTimerToStartOnActiveSession];
+    [self turnOnTimerWhichCancelsWhenSessionResigns];
+}
+
+- (void)detectGlassesWhenSessionBecomesActive
+{
+    [self.becameActiveSignal subscribeNext:^(__unused id x) {
+        [self detectGlassesNow];
+    }];
+}
+
+- (void)detectGlassesNow
+{
+    [self performSelectorOnMainThread:@selector(_showStatusAsSearching) withObject:nil waitUntilDone:NO];
+
+    // Give up if session ends (i.e. logout or sleep), or if X seconds pass
+    RACSignal *timeoutSignal = [RACSignal interval:30 onScheduler:[RACScheduler currentScheduler]];
+    RACSignal *cancelSignal = [RACSignal merge:@[self.resignActiveSignal, timeoutSignal]];
+    [[cancelSignal deliverOnMainThread]
+     subscribeNext:^(id x) {
+        [self _showStatusAsCanceledAndUndetermined];
+    }];
+
+
+    [[[[[self.glassesPresenceChecker.glassesPresenceSignal
+         distinctUntilChanged]
+        takeUntil:cancelSignal]
+       takeUntilBlock:^BOOL (NSNumber *presenceValue) {
+        return [presenceValue isEqual:@(GCHGlassesPresenceTrue)];
+    }]
+      deliverOnMainThread]
+     subscribeCompleted:^{
+        [self _showStatusAsDetected];
+    }];
+}
+
+#pragma mark - Signal Setup
 
 - (void)startSessionLifecycleSignals
 {
@@ -61,11 +103,7 @@
     self.becameActiveSignal = [RACSignal merge:@[didWakeSignal, logInSignal]];
 }
 
-- (void)detectGlassesOnTimedInterval
-{
-    [self setupTimerToStartOnActiveSession];
-    [self turnOnTimerWhichCancelsWhenSessionResigns];
-}
+#pragma mark - Timer
 
 - (void)setupTimerToStartOnActiveSession
 {
@@ -84,31 +122,7 @@
     }];
 }
 
-- (void)detectGlassesWhenSessionBecomesActive
-{
-    [self.becameActiveSignal subscribeNext:^(__unused id x) {
-        [self detectGlassesNow];
-    }];
-}
-
-- (void)detectGlassesNow
-{
-    [self performSelectorOnMainThread:@selector(_showStatusAsSearching) withObject:nil waitUntilDone:NO];
-
-    RACSignal *presenceSignal = self.glassesPresenceChecker.glassesPresenceSignal;
-
-    [[[[[presenceSignal distinctUntilChanged]
-        takeUntil:self.resignActiveSignal]
-       takeUntilBlock:^BOOL (NSNumber *presenceValue) {
-        return [presenceValue isEqual:@(GCHGlassesPresenceTrue)];
-    }]
-      deliverOnMainThread]
-     subscribeCompleted:^{
-        [self _showStatusAsDetected];
-    }];
-}
-
-#pragma mark - Status
+#pragma mark - Status Updates
 
 - (void)_showStatusAsSearching
 {
@@ -123,6 +137,11 @@
     [self.statusItemController updateForGlassesPresence:GCHGlassesPresenceTrue];
     [[GBHUD sharedHUD] showHUDWithType:GBHUDTypeSuccess text:@"Glasses Detected!"];
     [[GBHUD sharedHUD] autoDismissAfterDelay:2.0];
+}
+
+- (void)_showStatusAsCanceledAndUndetermined
+{
+    [self.statusItemController updateForGlassesPresence:GCHGlassesPresenceUnknown];
 }
 
 @end
