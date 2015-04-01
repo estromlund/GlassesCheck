@@ -10,6 +10,7 @@
 
 #import "GCHCamera.h"
 #import "GCHGlassesPresence.h"
+#import "GCHTypes.h"
 
 #import "RACStream+GCHAdditions.h"
 
@@ -78,7 +79,7 @@
     [self.camera endStream];
 }
 
-- (void)fetchedFrameFromCamera:(cv::Mat)videoFrame
+- (void)fetchedFrameFromCamera:(GCHCameraFrame)videoFrame
 {
     static cv::CascadeClassifier eyePairDetector = [self eyePairDetector];
 
@@ -108,8 +109,8 @@
 
     cv::Rect eyeRect = detectorResults[0];
 
-    cv::Mat areaBetweenEyesFrame = [self betweenEyesROIFromEyePairRect:eyeRect inFrame:videoFrame];
-    cv::Mat edgesFrame = [self edgesFrameFromFrame:areaBetweenEyesFrame];
+    GCHCameraFrame areaBetweenEyesFrame = [self betweenEyesROIFromEyePairRect:eyeRect inFrame:videoFrame];
+    GCHCameraFrame edgesFrame = [self edgesFrameFromFrame:areaBetweenEyesFrame];
 
 #if DEBUG_IMAGE_PROCESSING
     cv::imshow("Preprocessed", videoFrame);
@@ -145,7 +146,7 @@
     return (results.size() == 1);
 }
 
-- (cv::Mat)preprocessFrame:(cv::Mat)originalFrame
+- (GCHCameraFrame)preprocessFrame:(GCHCameraFrame)originalFrame
 {
     cv::cvtColor(originalFrame, originalFrame, CV_BGR2GRAY);
 
@@ -153,7 +154,7 @@
     return originalFrame;
 }
 
-- (cv::vector<cv::Rect> )featuresInFrame:(cv::Mat)frame usingClassifier:(cv::CascadeClassifier)classifier
+- (cv::vector<cv::Rect> )featuresInFrame:(GCHCameraFrame)frame usingClassifier:(cv::CascadeClassifier)classifier
 {
     double scalingFactor = 1.1;
     int minNeighbors = 2;
@@ -168,7 +169,7 @@
     return detectorResults;
 }
 
-- (cv::Mat)betweenEyesROIFromEyePairRect:(cv::Rect)eyePairRect inFrame:(cv::Mat)containingFrame
+- (GCHCameraFrame)betweenEyesROIFromEyePairRect:(cv::Rect)eyePairRect inFrame:(GCHCameraFrame)containingFrame
 {
     // Crop to area between eyes
     int width = 20;
@@ -187,19 +188,19 @@
     return containingFrame(betweenEyesRect);
 }
 
-- (cv::Mat)edgesFrameFromFrame:(cv::Mat)frame
+- (GCHCameraFrame)edgesFrameFromFrame:(GCHCameraFrame)frame
 {
     int lowThreshold = 50;
     int ratio = 3;
     int kernel_size = 3;
 
-    cv::Mat edgesFrame;
+    GCHCameraFrame edgesFrame;
     cv::Canny(frame, edgesFrame, lowThreshold, lowThreshold * ratio, kernel_size);
 
     return edgesFrame;
 }
 
-- (long)numberOfContoursInFrame:(cv::Mat)frame
+- (long)numberOfContoursInFrame:(GCHCameraFrame)frame
 {
     cv::vector<cv::vector<cv::Point> > contours;
     cv::vector<cv::Vec4i> hierarchy;

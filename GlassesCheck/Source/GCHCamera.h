@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+#import "GCHTypes.h"
+
 #import <opencv2/opencv.hpp>
 
 
 @protocol GCHCameraOutput<NSObject>
 
-- (void)fetchedFrameFromCamera:(cv ::Mat)frame;
+- (void)fetchedFrameFromCamera:(GCHCameraFrame)frame;
 
 @end
 

@@ -50,6 +50,7 @@
 		032D4CB31AC5688B0084B658 /* GCHGlassesChecker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GCHGlassesChecker.mm; sourceTree = "<group>"; };
 		032D4CC21AC56E3A0084B658 /* libopencv_objdetect.2.4.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_objdetect.2.4.10.dylib; path = ../../../../../usr/local/Cellar/opencv/2.4.10.1/lib/libopencv_objdetect.2.4.10.dylib; sourceTree = "<group>"; };
 		032D4CD61AC57ACD0084B658 /* libopencv_imgproc.2.4.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_imgproc.2.4.10.dylib; path = ../../../../../usr/local/Cellar/opencv/2.4.10.1/lib/libopencv_imgproc.2.4.10.dylib; sourceTree = "<group>"; };
+		0351A5821ACC01D000CB5B75 /* GCHTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCHTypes.h; sourceTree = "<group>"; };
 		0373446A1AC99810009466D8 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		03C150081AC9A78600A1B85C /* RACStream+GCHAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RACStream+GCHAdditions.h"; sourceTree = "<group>"; };
 		03C150091AC9A78600A1B85C /* RACStream+GCHAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RACStream+GCHAdditions.m"; sourceTree = "<group>"; };
@@ -196,13 +197,14 @@
 			children = (
 				032D4C891AC564930084B658 /* AppDelegate.h */,
 				032D4C8A1AC564930084B658 /* AppDelegate.m */,
+				03C150111AC9D5C400A1B85C /* GCHCamera.h */,
+				03C150121AC9D5C400A1B85C /* GCHCamera.mm */,
 				032D4CB21AC5688B0084B658 /* GCHGlassesChecker.h */,
 				032D4CB31AC5688B0084B658 /* GCHGlassesChecker.mm */,
 				03C1500F1AC9B38300A1B85C /* GCHGlassesPresence.h */,
 				03C1500C1AC9B28B00A1B85C /* GCHStatusBarManager.h */,
 				03C1500D1AC9B28B00A1B85C /* GCHStatusBarManager.m */,
-				03C150111AC9D5C400A1B85C /* GCHCamera.h */,
-				03C150121AC9D5C400A1B85C /* GCHCamera.mm */,
+				0351A5821ACC01D000CB5B75 /* GCHTypes.h */,
 			);
 			name = App;
 			sourceTree = "<group>";
