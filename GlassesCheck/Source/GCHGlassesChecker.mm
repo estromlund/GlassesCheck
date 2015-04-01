@@ -42,7 +42,7 @@
 
 - (RACSignal *)glassesPresenceSignal
 {
-    return [[[RACSignal createSignal:^RACDisposable *(id < RACSubscriber > subscriber) {
+    return [[RACSignal createSignal:^RACDisposable *(id < RACSubscriber > subscriber) {
         @synchronized(self)
         {
             if (self.numberOfSubscribers == 0) {
@@ -64,7 +64,7 @@
                 }
             }
         }];
-    }] logAll] filterUntilValueOccursNumTimesInARow:15];
+    }] filterUntilValueOccursNumTimesInARow:15];
 }
 
 - (void)_startCapturingVideo
