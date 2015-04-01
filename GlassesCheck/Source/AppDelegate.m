@@ -10,7 +10,7 @@
 
 #import "GCHGlassesChecker.h"
 #import "GCHGlassesPresence.h"
-#import "GCHStatusBarManager.h"
+#import "GCHStatusItemController.h"
 
 #import <GBHUD/GBHUD.h>
 #import <ReactiveCocoa/ReactiveCocoa.h>
@@ -18,7 +18,7 @@
 
 @interface AppDelegate ()
 
-@property (strong) GCHStatusBarManager *statusBarManager;
+@property (strong) GCHStatusItemController *statusItemController;
 @property (strong) GCHGlassesChecker *glassesPresenceChecker;
 
 @property (strong) RACSignal *becameActiveSignal;
@@ -33,8 +33,12 @@
 {
     self.glassesPresenceChecker = [[GCHGlassesChecker alloc] init];
 
-    self.statusBarManager = [[GCHStatusBarManager alloc] init];
-    [self.statusBarManager installAppStatusItem];
+    self.statusItemController = [[GCHStatusItemController alloc] init];
+    [self.statusItemController installAppStatusItem];
+    
+    [self.statusItemController.detectNowCommand.executionSignals subscribeNext:^(id x) {
+        [self detectGlassesNow];
+    }];
 
     [self startSessionLifecycleSignals];
 
@@ -116,7 +120,7 @@
 {
     [[GBHUD sharedHUD] dismissHUD];
 
-    [self.statusBarManager updateForGlassesPresence:GCHGlassesPresenceTrue];
+    [self.statusItemController updateForGlassesPresence:GCHGlassesPresenceTrue];
     [[GBHUD sharedHUD] showHUDWithType:GBHUDTypeSuccess text:@"Glasses Detected!"];
     [[GBHUD sharedHUD] autoDismissAfterDelay:2.0];
 }

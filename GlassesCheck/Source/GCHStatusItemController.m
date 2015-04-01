@@ -1,24 +1,26 @@
 //
-//  GCHStatusBarManager.m
+//  GCHStatusItemController.m
 //  GlassesCheck
 //
 //  Created by Erik Stromlund on 3/30/15.
 //  Copyright (c) 2015 FathomWorks LLC. All rights reserved.
 //
 
-#import "GCHStatusBarManager.h"
+#import "GCHStatusItemController.h"
 
 #import <AppKit/AppKit.h>
 
 
-@interface GCHStatusBarManager ()
+@interface GCHStatusItemController ()
+
+@property (strong) RACCommand *detectNowCommand;
 
 @property (strong) NSStatusItem *statusBarItem;
 
 @end
 
 
-@implementation GCHStatusBarManager
+@implementation GCHStatusItemController
 
 - (void)installAppStatusItem
 {
@@ -26,9 +28,15 @@
 
     NSMenu *statusBarMenu = [NSMenu new];
 
+    NSString *detectNowTitle = NSLocalizedString(@"Detect Now", nil);
+    NSMenuItem *detectNowItem = [statusBarMenu addItemWithTitle:detectNowTitle action:@selector(detectNow:) keyEquivalent:@""];
+    detectNowItem.target = self;
+
+    [statusBarMenu addItem:[NSMenuItem separatorItem]];
+
     NSString *quitItemTitle = NSLocalizedString(@"Quit", nil);
     NSMenuItem *quitItem = [statusBarMenu addItemWithTitle:quitItemTitle action:@selector(quitApp:) keyEquivalent:@""];
-    quitItem.enabled = YES;
+    quitItem.target = self;
 
     statusBarItem.menu = statusBarMenu;
 
@@ -57,9 +65,27 @@
     }
 }
 
+#pragma mark - Accessors
+
+- (RACCommand *)detectNowCommand
+{
+    if (!_detectNowCommand) {
+        _detectNowCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(__unused id input) {
+            return [RACSignal empty];
+        }];
+    }
+
+    return _detectNowCommand;
+}
+
 #pragma mark - Private
 
 #pragma mark Actions
+
+- (void)detectNow:(id)sender
+{
+    [self.detectNowCommand execute:nil];
+}
 
 - (void)quitApp:(id)sender
 {

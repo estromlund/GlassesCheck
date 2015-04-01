@@ -1,5 +1,5 @@
 //
-//  GCHStatusBarManager.h
+//  GCHStatusItemController.h
 //  GlassesCheck
 //
 //  Created by Erik Stromlund on 3/30/15.
@@ -10,7 +10,12 @@
 
 #import "GCHGlassesPresence.h"
 
-@interface GCHStatusBarManager : NSObject
+#import <ReactiveCocoa/ReactiveCocoa.h>
+
+
+@interface GCHStatusItemController : NSObject
+
+@property (nonatomic, strong, readonly) RACCommand *detectNowCommand;
 
 - (void)installAppStatusItem;
 - (void)updateForGlassesPresence:(GCHGlassesPresence)presence;
