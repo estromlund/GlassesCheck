@@ -21,7 +21,8 @@
 @property (strong) GCHStatusBarManager *statusBarManager;
 @property (strong) GCHGlassesChecker *glassesPresenceChecker;
 
-@property (weak) IBOutlet NSWindow *window;
+@property (strong) RACSignal *becameActiveSignal;
+@property (strong) RACSignal *resignActiveSignal;
 
 @end
 
@@ -30,23 +31,76 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    self.glassesPresenceChecker = [[GCHGlassesChecker alloc] init];
+
     self.statusBarManager = [[GCHStatusBarManager alloc] init];
     [self.statusBarManager installAppStatusItem];
 
-    self.glassesPresenceChecker = [[GCHGlassesChecker alloc] init];
+    [self startSessionLifecycleSignals];
 
-    [self lookForGlasses];
+    [self detectGlassesOnTimedInterval];
+    [self detectGlassesWhenSessionBecomesActive];
+
+    [self detectGlassesNow];
 }
 
-- (void)lookForGlasses
+- (void)startSessionLifecycleSignals
 {
-    [self _showStatusAsSearching];
+    NSNotificationCenter *notificationCenter = [[NSWorkspace sharedWorkspace] notificationCenter];
 
-    [[[[self.glassesPresenceChecker glassesPresenceSignal] distinctUntilChanged]
-      takeUntilBlock:^BOOL (NSNumber *presenceValue) {
+    RACSignal *willSleepSignal = [notificationCenter rac_addObserverForName:NSWorkspaceWillSleepNotification object:nil];
+    RACSignal *logOutSignal = [notificationCenter rac_addObserverForName:NSWorkspaceSessionDidResignActiveNotification object:nil];
+    self.resignActiveSignal = [RACSignal merge:@[willSleepSignal, logOutSignal]];
+
+    RACSignal *didWakeSignal = [notificationCenter rac_addObserverForName:NSWorkspaceDidWakeNotification object:nil];
+    RACSignal *logInSignal = [notificationCenter rac_addObserverForName:NSWorkspaceSessionDidBecomeActiveNotification object:nil];
+    self.becameActiveSignal = [RACSignal merge:@[didWakeSignal, logInSignal]];
+}
+
+- (void)detectGlassesOnTimedInterval
+{
+    [self setupTimerToStartOnActiveSession];
+    [self turnOnTimerWhichCancelsWhenSessionResigns];
+}
+
+- (void)setupTimerToStartOnActiveSession
+{
+    [self.becameActiveSignal subscribeNext:^(__unused id x) {
+        [self turnOnTimerWhichCancelsWhenSessionResigns];
+    }];
+}
+
+- (void)turnOnTimerWhichCancelsWhenSessionResigns
+{
+    NSTimeInterval thirtyMinutes = 30 * 60;
+    RACSignal *timerSignal = [RACSignal interval:thirtyMinutes onScheduler:[RACScheduler currentScheduler] withLeeway:0];
+
+    [[timerSignal takeUntil:self.resignActiveSignal] subscribeNext:^(__unused id x) {
+        [self detectGlassesNow];
+    }];
+}
+
+- (void)detectGlassesWhenSessionBecomesActive
+{
+    [self.becameActiveSignal subscribeNext:^(__unused id x) {
+        [self detectGlassesNow];
+    }];
+}
+
+- (void)detectGlassesNow
+{
+    [self performSelectorOnMainThread:@selector(_showStatusAsSearching) withObject:nil waitUntilDone:NO];
+
+    RACSignal *presenceSignal = self.glassesPresenceChecker.glassesPresenceSignal;
+
+    [[[[[presenceSignal distinctUntilChanged]
+        takeUntil:self.resignActiveSignal]
+       takeUntilBlock:^BOOL (NSNumber *presenceValue) {
         return [presenceValue isEqual:@(GCHGlassesPresenceTrue)];
-    }] subscribeCompleted:^{
-        [self performSelectorOnMainThread:@selector(_showStatusAsDetected) withObject:nil waitUntilDone:NO];
+    }]
+      deliverOnMainThread]
+     subscribeCompleted:^{
+        [self _showStatusAsDetected];
     }];
 }
 
@@ -54,7 +108,8 @@
 
 - (void)_showStatusAsSearching
 {
-    [[GBHUD sharedHUD] showHUDWithType:GBHUDTypeLoading text:@"Glasses On?"];
+    GBHUD *hud = [GBHUD sharedHUD];
+    [hud showHUDWithType:GBHUDTypeLoading text:@"Glasses On?"];
 }
 
 - (void)_showStatusAsDetected
