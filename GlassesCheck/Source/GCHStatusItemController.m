@@ -27,16 +27,20 @@
     NSStatusItem *statusBarItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
 
     NSMenu *statusBarMenu = [NSMenu new];
+    
 
     NSString *detectNowTitle = NSLocalizedString(@"Detect Now", nil);
     NSMenuItem *detectNowItem = [statusBarMenu addItemWithTitle:detectNowTitle action:@selector(detectNow:) keyEquivalent:@""];
     detectNowItem.target = self;
+    
 
     [statusBarMenu addItem:[NSMenuItem separatorItem]];
+    
 
     NSString *quitItemTitle = NSLocalizedString(@"Quit", nil);
     NSMenuItem *quitItem = [statusBarMenu addItemWithTitle:quitItemTitle action:@selector(quitApp:) keyEquivalent:@""];
     quitItem.target = self;
+    
 
     statusBarItem.menu = statusBarMenu;
 
