@@ -17,6 +17,7 @@
 		032D4CCF1AC56E3A0084B658 /* libopencv_objdetect.2.4.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 032D4CC21AC56E3A0084B658 /* libopencv_objdetect.2.4.10.dylib */; };
 		032D4CD71AC57ACD0084B658 /* libopencv_imgproc.2.4.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 032D4CD61AC57ACD0084B658 /* libopencv_imgproc.2.4.10.dylib */; };
 		0373446B1AC99810009466D8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0373446A1AC99810009466D8 /* MainMenu.xib */; };
+		038144A61ACD7F6800739B99 /* GCHImageProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 038144A51ACD7F6800739B99 /* GCHImageProcessor.mm */; };
 		03C1500A1AC9A78600A1B85C /* RACStream+GCHAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 03C150091AC9A78600A1B85C /* RACStream+GCHAdditions.m */; };
 		03C1500E1AC9B28B00A1B85C /* GCHStatusItemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03C1500D1AC9B28B00A1B85C /* GCHStatusItemController.m */; };
 		03C150131AC9D5C400A1B85C /* GCHCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03C150121AC9D5C400A1B85C /* GCHCamera.mm */; };
@@ -52,6 +53,8 @@
 		032D4CD61AC57ACD0084B658 /* libopencv_imgproc.2.4.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_imgproc.2.4.10.dylib; path = ../../../../../usr/local/Cellar/opencv/2.4.10.1/lib/libopencv_imgproc.2.4.10.dylib; sourceTree = "<group>"; };
 		0351A5821ACC01D000CB5B75 /* GCHTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCHTypes.h; sourceTree = "<group>"; };
 		0373446A1AC99810009466D8 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		038144A41ACD7F6800739B99 /* GCHImageProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCHImageProcessor.h; sourceTree = "<group>"; };
+		038144A51ACD7F6800739B99 /* GCHImageProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GCHImageProcessor.mm; sourceTree = "<group>"; };
 		03C03A6B1ACC36370000E4AC /* GlassesCheck.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = GlassesCheck.entitlements; sourceTree = "<group>"; };
 		03C150081AC9A78600A1B85C /* RACStream+GCHAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RACStream+GCHAdditions.h"; sourceTree = "<group>"; };
 		03C150091AC9A78600A1B85C /* RACStream+GCHAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RACStream+GCHAdditions.m"; sourceTree = "<group>"; };
@@ -89,6 +92,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03195E141ACD9B5B00855BC5 /* Imaging */ = {
+			isa = PBXGroup;
+			children = (
+				03C150111AC9D5C400A1B85C /* GCHCamera.h */,
+				03C150121AC9D5C400A1B85C /* GCHCamera.mm */,
+				032D4CB21AC5688B0084B658 /* GCHGlassesChecker.h */,
+				032D4CB31AC5688B0084B658 /* GCHGlassesChecker.mm */,
+				03C1500F1AC9B38300A1B85C /* GCHGlassesPresence.h */,
+				038144A41ACD7F6800739B99 /* GCHImageProcessor.h */,
+				038144A51ACD7F6800739B99 /* GCHImageProcessor.mm */,
+			);
+			name = Imaging;
+			sourceTree = "<group>";
+		};
 		032D4C7B1AC564930084B658 = {
 			isa = PBXGroup;
 			children = (
@@ -197,13 +214,9 @@
 		03C150071AC9A76100A1B85C /* App */ = {
 			isa = PBXGroup;
 			children = (
+				03195E141ACD9B5B00855BC5 /* Imaging */,
 				032D4C891AC564930084B658 /* AppDelegate.h */,
 				032D4C8A1AC564930084B658 /* AppDelegate.m */,
-				03C150111AC9D5C400A1B85C /* GCHCamera.h */,
-				03C150121AC9D5C400A1B85C /* GCHCamera.mm */,
-				032D4CB21AC5688B0084B658 /* GCHGlassesChecker.h */,
-				032D4CB31AC5688B0084B658 /* GCHGlassesChecker.mm */,
-				03C1500F1AC9B38300A1B85C /* GCHGlassesPresence.h */,
 				03C1500C1AC9B28B00A1B85C /* GCHStatusItemController.h */,
 				03C1500D1AC9B28B00A1B85C /* GCHStatusItemController.m */,
 				0351A5821ACC01D000CB5B75 /* GCHTypes.h */,
@@ -371,6 +384,7 @@
 			files = (
 				032D4CB41AC5688B0084B658 /* GCHGlassesChecker.mm in Sources */,
 				03C150131AC9D5C400A1B85C /* GCHCamera.mm in Sources */,
+				038144A61ACD7F6800739B99 /* GCHImageProcessor.mm in Sources */,
 				03C1500E1AC9B28B00A1B85C /* GCHStatusItemController.m in Sources */,
 				03C1500A1AC9A78600A1B85C /* RACStream+GCHAdditions.m in Sources */,
 				032D4C8D1AC564930084B658 /* main.m in Sources */,
